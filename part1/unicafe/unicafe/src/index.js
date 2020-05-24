@@ -10,18 +10,26 @@ const Button = (props) => (
 const Title = (props) => <h1>{props.name}</h1>
 
 const Statistics = ({ good, neutral, bad}) => {
-  const all = good + neutral + bad
-  const average = all === 0 ? 0 : (good + (bad * -1)) / (all)
-  const positive = all === 0 ? 0 : (good / all) * 100
+  if ((good !== 0) || (neutral !== 0) || (bad !== 0)) {
+    const all = good + neutral + bad
+    const average = good + (bad * -1) / (all)
+    const positive = (good / all) * 100
 
-  return(
+    return(
+      <div>
+        <Category name="good" count={good}/>
+        <Category name="neutral" count={neutral}/>
+        <Category name="bad" count={bad}/>
+        <Category name="all" count={all}/>
+        <Category name="average" count={average}/>
+        <Category name="positive" count={positive} char="%"/>   
+      </div>
+    )
+  }
+
+  return (
     <div>
-      <Category name="good" count={good}/>
-      <Category name="neutral" count={neutral}/>
-      <Category name="bad" count={bad}/>
-      <Category name="all" count={all}/>
-      <Category name="average" count={average}/>
-      <Category name="positive" count={positive} char="%"/>   
+      No feedback given
     </div>
   )
 }
