@@ -28,14 +28,29 @@ const App = (props) => {
     return () => setVote(newState)
   }
 
+  const mostVoted = vote.reduce((maxIndex, currentValue, currentIndex, vote) => {
+      if (currentValue > vote[maxIndex]) {
+        return currentIndex
+      } else {
+        return maxIndex
+      }
+    }, 0)
+
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       <p>
         {props.anecdotes[selected]}
       </p>
       <Votes count={vote[selected]} />
       <Button onClick={voteAnecdote(selected)} text="vote"></Button>
       <Button onClick={selectAnecdote} text="next anecdote"></Button>
+
+      <h1>Anecdote with most votes</h1>
+      <p>
+        {props.anecdotes[mostVoted]}
+      </p>
+      <Votes count={vote[mostVoted]} />
     </div>
   )
 }
