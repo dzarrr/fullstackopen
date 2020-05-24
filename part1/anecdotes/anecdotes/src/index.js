@@ -43,8 +43,8 @@ const App = (props) => {
         {props.anecdotes[selected]}
       </p>
       <Votes count={vote[selected]} />
-      <Button onClick={voteAnecdote(selected)} text="vote"></Button>
-      <Button onClick={selectAnecdote} text="next anecdote"></Button>
+      <Button onClick={voteAnecdote(selected)} text="Vote"></Button>
+      <Button onClick={selectAnecdote} text="Next Anecdote"></Button>
 
       <h1>Anecdote with most votes</h1>
       <p>
