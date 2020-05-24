@@ -7,12 +7,25 @@ const Button = ({onClick, text}) => (
   </button>
 )
 
+const Votes = ({count}) => (
+  <p>
+    has {count} votes
+  </p>
+)
+
 const App = (props) => {
   const [selected, setSelected] = useState(0)
+  const [vote, setVote] = useState(new Array(props.anecdotes.length).fill(0))
 
   const selectAnecdote = () => {
-    console.log('adafas')
     return setSelected(Math.floor(Math.random() * props.anecdotes.length))
+  }
+
+  const voteAnecdote = (selected) => {
+    let newState = [...vote]
+    newState[selected] += 1
+
+    return () => setVote(newState)
   }
 
   return (
@@ -20,6 +33,8 @@ const App = (props) => {
       <p>
         {props.anecdotes[selected]}
       </p>
+      <Votes count={vote[selected]} />
+      <Button onClick={voteAnecdote(selected)} text="vote"></Button>
       <Button onClick={selectAnecdote} text="next anecdote"></Button>
     </div>
   )
