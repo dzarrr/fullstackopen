@@ -9,17 +9,26 @@ const Button = (props) => (
 
 const Title = (props) => <h1>{props.name}</h1>
 
-const Statistics = ({ good, neutral, bad}) => (
-  <div>
-    <Category name="good" count={good}/>
-    <Category name="neutral" count={neutral}/>
-    <Category name="bad" count={bad}/>
-  </div>
-)
+const Statistics = ({ good, neutral, bad}) => {
+  const all = good + neutral + bad
+  const average = all === 0 ? 0 : (good + (bad * -1)) / (all)
+  const positive = all === 0 ? 0 : (good / all) * 100
 
-const Category = ({name, count}) => (
-  <p>
-    {name} {count}
+  return(
+    <div>
+      <Category name="good" count={good}/>
+      <Category name="neutral" count={neutral}/>
+      <Category name="bad" count={bad}/>
+      <Category name="all" count={all}/>
+      <Category name="average" count={average}/>
+      <Category name="positive" count={positive} char="%"/>   
+    </div>
+  )
+}
+
+const Category = ({name, count, char}) => (
+  <p style={{margin: 0}}>
+    {name} {count} {char}
   </p>
 )
 
