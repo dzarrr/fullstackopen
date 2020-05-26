@@ -3,13 +3,44 @@ import axios from 'axios'
 
 import './App.css'
 
+const Weather = ({capital, weatherInfo}) => {
+  return (
+    <div>
+      <h2>weather in {capital}</h2>
+      <div>
+        <div>
+          <span><strong>temperature:</strong>{` ${weatherInfo.temperature}`} Celcius</span>
+          <br></br>
+          <img src={weatherInfo.weather_icons ? weatherInfo.weather_icons[0] : ""} alt=""/>
+          <br></br>
+          <span>
+            <strong>wind:</strong>
+            {` ${weatherInfo.wind_speed} mph direction ${weatherInfo.wind_dir}`}
+          </span>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 const Country = (props) => {
+  const [weatherInfo, setWeatherInfo] = useState({})
   const { name, capital, population, languages, flag } = props
+
+  useEffect(() => {
+    axios
+      .get(`http://api.weatherstack.com/current?access_key=${process.env.REACT_APP_API_KEY}&query=${capital}`)
+      .then(response => {
+        setWeatherInfo(response.data.current)
+      })
+  }, [])
+
   return (
     <div>
       <h1>{name}</h1>
       <div>
         <p>capital {capital}</p>
+        <br></br>
         <p>population {population}</p>
       </div>
       <h2>languages</h2>
@@ -19,11 +50,13 @@ const Country = (props) => {
         )}
       </ul>
       <img src={flag} alt=""/>
+      <Weather capital={capital} weatherInfo={weatherInfo} />
     </div>
   )
 }
 
-const Countries = ({countries}) => {
+
+const Countries = ({onShowButtonClick, countries}) => {
   if (countries.length === 1) {
     const country = countries[0]
     return (
@@ -41,9 +74,14 @@ const Countries = ({countries}) => {
     return (
       <div>
         {countries.map(country =>
-          <p key={country.name}>
-            {country.name}
-          </p>
+          <div key={country.name}>
+            <p>
+              {country.name}
+            </p>
+            <button onClick={() => onShowButtonClick(country)}>
+              show
+            </button>
+          </div>
         )}
       </div>
     )
@@ -67,6 +105,10 @@ const App = () => {
     setSearch(event.target.value)
   }
 
+  const onShowButtonClick = (country) => {
+    setSearch(country.name)
+  }
+
   const getFilteredCountries = (countries, search) =>
     countries.filter(country =>
       country.name.toLowerCase().includes(search.toLowerCase())
@@ -78,7 +120,10 @@ const App = () => {
         find countries
         <input type="text" onChange={handleSearchChange} />
       </div>
-      <Countries countries={getFilteredCountries(countries, search)} />
+      <Countries
+        onShowButtonClick={onShowButtonClick}
+        countries={getFilteredCountries(countries, search)}
+      />
     </div>
   )
 }
