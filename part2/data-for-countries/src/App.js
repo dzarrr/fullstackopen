@@ -3,24 +3,37 @@ import axios from 'axios'
 
 import './App.css'
 
+const Country = (props) => {
+  const { name, capital, population, languages, flag } = props
+  return (
+    <div>
+      <h1>{name}</h1>
+      <div>
+        <p>capital {capital}</p>
+        <p>population {population}</p>
+      </div>
+      <h2>languages</h2>
+      <ul>
+        {languages.map(language =>
+          <li key={language.name}>{language.name}</li>
+        )}
+      </ul>
+      <img src={flag} alt=""/>
+    </div>
+  )
+}
+
 const Countries = ({countries}) => {
   if (countries.length === 1) {
     const country = countries[0]
     return (
-      <div>
-        <h1>{country.name}</h1>
-        <div>
-          <p>capital {country.capital}</p>
-          <p>population {country.population}</p>
-        </div>
-        <h2>languages</h2>
-        <ul>
-          {country.languages.map(language =>
-            <li key={language.name}>{language.name}</li>
-          )}
-        </ul>
-        <img src={country.flag} alt=""/>
-      </div>
+      <Country
+        name={country.name}
+        capital={country.capital}
+        population={country.population}
+        languages={country.languages}
+        flag={country.flag}
+      />
     )
   } else if (countries.length > 10) {
     return <p>Too many matches, specify another filter</p>
