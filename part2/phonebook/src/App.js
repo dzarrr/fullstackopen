@@ -1,15 +1,25 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+
 import Persons from './components/Persons'
 import PersonForm from './components/PersonForm'
 import Filter from './components/Filter'
 
+
 const App = () => {
-  const [ persons, setPersons ] = useState([
-    { name: 'Arto Hellas', phone: '040-1234567' }
-  ]) 
+  const [ persons, setPersons ] = useState([]) 
   const [ newName, setNewName ] = useState('')
   const [ newPhone, setNewPhone ] = useState('')
   const [ filter, setFilter ] = useState('')
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:3001/persons')
+      .then( response => {
+        console.log(response.data)
+        setPersons(response.data)
+      })
+  }, [])
 
   const duplicateName = (newName) => {
     let duplicate = false
@@ -54,7 +64,7 @@ const App = () => {
     .filter(person =>
         person.name.toLowerCase().includes(filter.toLowerCase())
       )
- 
+
   return (
     <div>
       <h2>Phonebook</h2>
