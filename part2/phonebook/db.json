@@ -7,13 +7,23 @@
     },
     {
       "name": "Itali Calvino",
-      "number": "111111",
+      "number": "99999",
       "id": 6
     },
     {
+      "name": "Nick Valensi",
+      "number": "223131231",
+      "id": 9
+    },
+    {
+      "name": "John Lomboh",
+      "number": "990099",
+      "id": 10
+    },
+    {
       "name": "Dem-Ta",
-      "number": "027412313",
-      "id": 8
+      "number": "911",
+      "id": 11
     }
   ]
 }

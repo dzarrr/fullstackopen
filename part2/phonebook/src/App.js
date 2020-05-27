@@ -31,10 +31,26 @@ const App = () => {
     return duplicate
   }
 
+  const updatePerson = () => {
+    const updatedPerson = persons.find(p => p.name === newName)
+    const changedPerson = { ...updatedPerson, number: newNumber}
+
+    phonebookService
+      .update(updatedPerson.id, changedPerson)
+      .then(returnedPerson => {
+        setPersons(persons.map(person => person.id !== updatedPerson.id ? person : returnedPerson))
+      })
+
+  }
+
   const addPerson = (event) => {
     event.preventDefault()
     if (duplicateName(newName)) {
-      alert(`${newName} is already added to phonebook`)
+      if (window.confirm(
+        `${newName} is already added to phonebook, replace the old number with the new one?`
+      )) {
+        updatePerson()
+      }
     } else {
       const newPerson = {
         name: newName,
