@@ -1,7 +1,7 @@
 import React from 'react'
 
 const PersonForm = (props) => {
-  const {onSubmit, onNameChange, onPhoneChange} = props
+  const {onSubmit, onNameChange, onNumberChange} = props
   
   return (
     <form onSubmit={onSubmit}>
@@ -9,7 +9,7 @@ const PersonForm = (props) => {
         name: <input onChange={onNameChange} />
       </div>
       <div>
-        number: <input onChange={onPhoneChange} />
+        number: <input onChange={onNumberChange} />
       </div>
       <div>
         <button type="submit">add</button>

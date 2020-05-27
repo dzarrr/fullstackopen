@@ -5,9 +5,11 @@ const Person = ({name, number}) =>
     {name} {number}
   </p>
 
-const Persons = ({persons}) =>
-  persons.map(person => 
+const Persons = ({persons}) =>{
+  console.log(persons)
+  return persons.map(person => 
     <Person key={person.name} name={person.name} number={person.number} />
   )
+}
 
 export default Persons;

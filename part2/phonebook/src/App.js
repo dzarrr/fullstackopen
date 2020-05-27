@@ -9,14 +9,13 @@ import Filter from './components/Filter'
 const App = () => {
   const [ persons, setPersons ] = useState([]) 
   const [ newName, setNewName ] = useState('')
-  const [ newPhone, setNewPhone ] = useState('')
+  const [ newNumber, setNewNumber ] = useState('')
   const [ filter, setFilter ] = useState('')
 
   useEffect(() => {
     axios
       .get('http://localhost:3001/persons')
       .then( response => {
-        console.log(response.data)
         setPersons(response.data)
       })
   }, [])
@@ -35,15 +34,17 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault()
-    console.log(newName, newPhone)
     if (duplicateName(newName)) {
       alert(`${newName} is already added to phonebook`)
     } else {
       const newPerson = {
         name: newName,
-        phone: newPhone
+        number: newNumber
       }
-      setPersons(persons.concat(newPerson))
+
+      axios.post('http://localhost:3001/persons', newPerson).then(response => {
+        setPersons(persons.concat(response.data))
+      })
     }
   }
 
@@ -51,8 +52,8 @@ const App = () => {
     setNewName(event.target.value)
   }
 
-  const handlePhoneChange = (event) => {
-    setNewPhone(event.target.value)
+  const handleNumberChange = (event) => {
+    setNewNumber(event.target.value)
   }
 
   const handleFilterChange = (event) => {
@@ -73,7 +74,7 @@ const App = () => {
       <PersonForm
         onSubmit={addPerson}
         onNameChange={handleNameChange}
-        onPhoneChange={handlePhoneChange}
+        onNumberChange={handleNumberChange}
       />
       <h2>Numbers</h2>
       <div>
