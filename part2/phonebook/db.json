@@ -1,21 +1,6 @@
 {
   "persons": [
     {
-      "name": "Ada Lovelace",
-      "number": "39-44-5323523",
-      "id": 2
-    },
-    {
-      "name": "Itali Calvino",
-      "number": "99999",
-      "id": 6
-    },
-    {
-      "name": "Nick Valensi",
-      "number": "223131231",
-      "id": 9
-    },
-    {
       "name": "John Lomboh",
       "number": "990099",
       "id": 10
@@ -34,11 +19,6 @@
       "name": "Obnoxious Ad",
       "number": "99900022",
       "id": 14
-    },
-    {
-      "name": "Nero Ju",
-      "number": "231131",
-      "id": 15
     },
     {
       "name": "Mibmb",
@@ -79,11 +59,6 @@
       "name": "Joe Jonas",
       "number": "21313131",
       "id": 25
-    },
-    {
-      "name": "Marion Jola",
-      "number": "08921313131",
-      "id": 26
     },
     {
       "name": "Herbert Groove",

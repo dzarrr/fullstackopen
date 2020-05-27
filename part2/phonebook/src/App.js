@@ -42,6 +42,16 @@ const App = () => {
       .then(returnedPerson => {
         setPersons(persons.map(person => person.id !== updatedPerson.id ? person : returnedPerson))
       })
+      .catch(error => {
+        setMessage({
+          content: `Information of ${changedPerson.name} has already been removed from server`,
+          status: "error"
+        })
+        setTimeout(() => {
+          setMessage({content: null, status: ''})
+          window.location.reload()
+        }, 5000)
+      })
 
   }
 
@@ -78,6 +88,16 @@ const App = () => {
         .then(() => {
           phonebookService.getAll()
           .then(updatedPersons => setPersons(updatedPersons))
+        })
+        .catch(error => {
+          setMessage({
+            content: `Information of ${person.name} has already been removed from server`,
+            status: "error"
+          })
+          setTimeout(() => {
+            setMessage({content: null, status: ''})
+            window.location.reload()
+          }, 5000)
         })
     }
   }
