@@ -5,7 +5,6 @@ import PersonForm from './components/PersonForm'
 import Filter from './components/Filter'
 import phonebookService from './services/phonebook'
 
-
 const App = () => {
   const [ persons, setPersons ] = useState([]) 
   const [ newName, setNewName ] = useState('')
@@ -43,8 +42,19 @@ const App = () => {
       }
 
       phonebookService
-        .update(newPerson)
+        .create(newPerson)
         .then(updatedData => setPersons(persons.concat(updatedData)))
+    }
+  }
+
+  const deletePerson = person => {
+    if (window.confirm(`Delete ${person.name}`)){
+      phonebookService
+        .deletePerson(person.id)
+        .then(() => {
+          phonebookService.getAll()
+          .then(updatedPersons => setPersons(updatedPersons))
+        })
     }
   }
 
@@ -78,7 +88,7 @@ const App = () => {
       />
       <h2>Numbers</h2>
       <div>
-        <Persons persons={getFilteredPerson(persons)} />
+        <Persons persons={getFilteredPerson(persons)} handleDeletePerson={deletePerson}/>
       </div>
     </div>
   )
