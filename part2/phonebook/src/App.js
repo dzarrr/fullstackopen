@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 
 import Persons from './components/Persons'
 import PersonForm from './components/PersonForm'
 import Filter from './components/Filter'
+import phonebookService from './services/phonebook'
 
 
 const App = () => {
@@ -13,11 +13,11 @@ const App = () => {
   const [ filter, setFilter ] = useState('')
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then( response => {
-        setPersons(response.data)
-      })
+    phonebookService
+      .getAll()
+      .then(
+        persons => setPersons(persons)
+      )
   }, [])
 
   const duplicateName = (newName) => {
@@ -42,9 +42,9 @@ const App = () => {
         number: newNumber
       }
 
-      axios.post('http://localhost:3001/persons', newPerson).then(response => {
-        setPersons(persons.concat(response.data))
-      })
+      phonebookService
+        .update(newPerson)
+        .then(updatedData => setPersons(persons.concat(updatedData)))
     }
   }
 
